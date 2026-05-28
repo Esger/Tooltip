@@ -25,6 +25,7 @@ body {
     text-underline-offset: 4px;
     anchor-name: --tooltip;
     anchor-scope: --tooltip;
+    --arrow-size: 11.3px;
 }
 
 [data-tooltip]::before {
@@ -49,25 +50,25 @@ body {
     border-shape: polygon(
             /* Top-left arrow tip (aligned with vertical left edge) */
             0% 0%,
-            15px 10px,
+            var(--arrow-size) var(--arrow-size),
 
             /* Top-right arrow tip (aligned with vertical right edge) */
-            calc(100% - 15px) 10px,
+            calc(100% - var(--arrow-size)) var(--arrow-size),
             100% 0%,
 
             /* Bottom-right arrow tip (aligned with vertical right edge) */
             100% 100%,
-            calc(100% - 15px) calc(100% - 10px),
+            calc(100% - var(--arrow-size)) calc(100% - var(--arrow-size)),
 
             /* Bottom-left arrow tip (aligned with vertical left edge) */
-            15px calc(100% - 10px),
+            var(--arrow-size) calc(100% - var(--arrow-size)),
             0% 100%);
 
     /* Tooltip aesthetics */
     background: #2b2b2b;
     color: #fff;
-    padding: 22px 16px;
-    /* Accommodate the 10px arrows on both top and bottom */
+    padding: calc(12px + var(--arrow-size)) 16px;
+    /* Accommodate the arrows on both top and bottom */
     width: max-content;
     max-width: 250px;
     text-align: left;
@@ -89,10 +90,10 @@ body {
      * - We shrink the right margin by 15px to hide the right arrows.
      * The try-tactics swap these margins automatically on vertical/horizontal flips!
      */
-    margin-top: -10px;
+    margin-top: calc(-1 * var(--arrow-size));
     margin-bottom: 0px;
     margin-left: 0px;
-    margin-right: -15px;
+    margin-right: calc(-1 * var(--arrow-size));
     clip-path: inset(0px) margin-box;
 }
 
