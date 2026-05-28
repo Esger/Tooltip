@@ -75,20 +75,20 @@ body {
     /* Interactive states */
     opacity: 0;
     visibility: hidden;
-    transition: opacity 0.2s ease, translate 0.2s ease;
-    translate: 0 8px;
+    transition: opacity 0.2s ease, margin-bottom 0.2s ease, margin-top 0.2s ease;
     /* Slide-in effect */
     z-index: 1000;
 
     /* 
      * Dynamic arrow masking using clip-path and margin-box.
      * In the default state (above button, left arrow pointing down):
-     * - We shrink the top margin by 10px to hide the top arrows.
-     * - We shrink the right margin by 15px to hide the right arrows.
+     * - We shrink the top margin by var(--arrow-size) to hide the top arrows.
+     * - We shrink the right margin by var(--arrow-size) to hide the right arrows.
+     * - We set margin-bottom to -8px as a start offset for vertical slide-in.
      * The try-tactics swap these margins automatically on vertical/horizontal flips!
      */
     margin-top: calc(-1 * var(--arrow-size));
-    margin-bottom: 0px;
+    margin-bottom: -8px;
     margin-left: 0px;
     margin-right: calc(-1 * var(--arrow-size));
     clip-path: inset(0px) margin-box;
@@ -104,5 +104,6 @@ body {
 [data-tooltip]:focus::before {
     opacity: 1;
     visibility: visible;
-    translate: 0 0;
+    margin-top: calc(-1 * var(--arrow-size));
+    margin-bottom: 0px;
 }
