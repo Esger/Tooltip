@@ -20,9 +20,6 @@ body {
 [data-tooltip] {
     position: relative;
     cursor: pointer;
-    text-decoration: underline;
-    text-decoration-style: dotted;
-    text-underline-offset: 4px;
     anchor-name: --tooltip;
     anchor-scope: --tooltip;
     --arrow-size: 11.3px;
