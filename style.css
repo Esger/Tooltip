@@ -44,28 +44,14 @@ body {
      * Arrow with the brand new border-shape property
      * Creates a rectangular box with 4 arrows pointing up and down inside the box bounds 
      */
-    border-shape: polygon(
-            /* Top-left arrow tip (aligned with vertical left edge) */
-            0% 0%,
-            var(--arrow-size) var(--arrow-size),
-
-            /* Top-right arrow tip (aligned with vertical right edge) */
-            calc(100% - var(--arrow-size)) var(--arrow-size),
-            100% 0%,
-
-            /* Bottom-right arrow tip (aligned with vertical right edge) */
-            100% 100%,
-            calc(100% - var(--arrow-size)) calc(100% - var(--arrow-size)),
-
-            /* Bottom-left arrow tip (aligned with vertical left edge) */
-            var(--arrow-size) calc(100% - var(--arrow-size)),
-            0% 100%);
+    border: solid var(--arrow-size);
+    border-color: #0000 #2b2b2b;
 
     /* Tooltip aesthetics */
     background: #2b2b2b;
+    background-clip: padding-box;
     color: #fff;
-    padding: calc(12px + var(--arrow-size)) 16px;
-    /* Accommodate the arrows on both top and bottom */
+    padding: 12px 16px;
     width: max-content;
     max-width: 250px;
     text-align: left;
