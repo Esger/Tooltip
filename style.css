@@ -1,0 +1,100 @@
+body {
+    min-height: 100dvh;
+    padding: 40px;
+    font-family: system-ui, -apple-system, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #f4f4f9;
+    color: #333;
+}
+
+.buttons {
+    display: grid;
+    grid-template-columns: repeat(3, min(50vw, 200px));
+    gap: 24px;
+    margin: 24px;
+}
+
+[data-tooltip] {
+    position: relative;
+    cursor: pointer;
+    text-decoration: underline;
+    text-decoration-style: dotted;
+    text-underline-offset: 4px;
+    anchor-name: --tooltip;
+    anchor-scope: --tooltip;
+}
+
+[data-tooltip]::before {
+    content: attr(data-tooltip);
+    display: block;
+
+    /* 
+     * Positioning via CSS Anchor Positioning
+     * We explicitly anchor to the parent button using position-anchor
+     * We use position: fixed to escape the relative parent containing block circularity constraint!
+     */
+    position: fixed;
+    position-anchor: --tooltip;
+    position-area: top center;
+    position-try-fallbacks: --flip-bottom;
+
+    /* 
+     * Arrow with the brand new border-shape property
+     * Creates a rectangular box with a downward pointing arrow 
+     */
+    border-shape: polygon(0% 0%,
+            100% 0%,
+            100% calc(100% - 10px),
+            calc(50% + 10px) calc(100% - 10px),
+            50% 100%,
+            calc(50% - 10px) calc(100% - 10px),
+            0% calc(100% - 10px));
+
+    /* Tooltip aesthetics */
+    background: #2b2b2b;
+    color: #fff;
+    padding: 12px 16px;
+    padding-bottom: calc(12px + 10px);
+    /* Accommodate the 10px arrow */
+    width: max-content;
+    max-width: 250px;
+    text-align: center;
+    font-size: 0.875rem;
+    line-height: 1.4;
+
+    /* Interactive states */
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.2s ease, translate 0.2s ease;
+    translate: 0 8px;
+    /* Slide-in effect */
+    z-index: 1000;
+}
+
+/* 
+ * Define a custom position-try fallback that flips both the position 
+ * AND the border-shape arrow so it points UP instead of DOWN
+ */
+@position-try --flip-bottom {
+    position-area: bottom center;
+    border-shape: polygon(0% 10px,
+            calc(50% - 10px) 10px,
+            50% 0%,
+            calc(50% + 10px) 10px,
+            100% 10px,
+            100% 100%,
+            0% 100%);
+    padding-bottom: 12px;
+    padding-top: calc(12px + 10px);
+    translate: 0 -8px;
+}
+
+[data-tooltip]:hover::before,
+[data-tooltip]:focus::before {
+    opacity: 1;
+    visibility: visible;
+    translate: 0 0;
+}
