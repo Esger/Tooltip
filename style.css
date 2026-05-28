@@ -38,8 +38,9 @@ body {
      */
     position: fixed;
     position-anchor: --tooltip;
-    position-area: top center;
-    position-try-fallbacks: --flip-bottom;
+    bottom: anchor(top);
+    left: anchor(center);
+    position-try-fallbacks: flip-block, flip-inline, flip-block flip-inline;
 
     /* 
      * Arrow with the brand new border-shape property
@@ -86,10 +87,7 @@ body {
  * Define a custom position-try fallback that flips both the position 
  * AND the border-shape arrow so it points UP instead of DOWN
  */
-@position-try --flip-bottom {
-    position-area: bottom center;
-    translate: 0 -8px;
-}
+
 
 [data-tooltip]:hover::before,
 [data-tooltip]:focus::before {
