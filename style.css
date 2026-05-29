@@ -18,11 +18,10 @@ body {
 }
 
 [data-tooltip] {
+    --arrow-size: 11.3px;
     position: relative;
     cursor: pointer;
-    text-decoration: underline;
-    text-decoration-style: dotted;
-    text-underline-offset: 4px;
+    padding: var(--arrow-size);
     anchor-name: --tooltip;
     anchor-scope: --tooltip;
 }
@@ -38,63 +37,61 @@ body {
      */
     position: fixed;
     position-anchor: --tooltip;
-    position-area: top center;
-    position-try-fallbacks: --flip-bottom;
+    bottom: anchor(top);
+    left: anchor(center);
+    position-try-fallbacks: flip-block, flip-inline, flip-block flip-inline;
 
     /* 
      * Arrow with the brand new border-shape property
-     * Creates a rectangular box with a downward pointing arrow 
+     * Creates a rectangular box with 4 arrows pointing up and down inside the box bounds 
      */
-    border-shape: polygon(0% 0%,
-            100% 0%,
-            100% calc(100% - 10px),
-            calc(50% + 10px) calc(100% - 10px),
-            50% 100%,
-            calc(50% - 10px) calc(100% - 10px),
-            0% calc(100% - 10px));
+    border: solid var(--arrow-size);
+    border-color: #0000 #2b2b2b;
+    /* border-radius: 6px; */
 
     /* Tooltip aesthetics */
     background: #2b2b2b;
+    background-clip: padding-box;
     color: #fff;
     padding: 12px 16px;
-    padding-bottom: calc(12px + 10px);
-    /* Accommodate the 10px arrow */
     width: max-content;
     max-width: 250px;
-    text-align: center;
+    text-align: left;
     font-size: 0.875rem;
     line-height: 1.4;
 
     /* Interactive states */
     opacity: 0;
     visibility: hidden;
-    transition: opacity 0.2s ease, translate 0.2s ease;
-    translate: 0 8px;
+    transition: opacity 0.2s ease, margin-bottom 0.2s ease, margin-top 0.2s ease;
     /* Slide-in effect */
     z-index: 1000;
+
+    /* 
+     * Dynamic arrow masking using clip-path and margin-box.
+     * In the default state (above button, left arrow pointing down):
+     * - We shrink the top margin by var(--arrow-size) to hide the top arrows.
+     * - We shrink the right margin by var(--arrow-size) to hide the right arrows.
+     * - We set margin-bottom to -8px as a start offset for vertical slide-in.
+     * The try-tactics swap these margins automatically on vertical/horizontal flips!
+     */
+    margin-top: calc(-1 * var(--arrow-size));
+    margin-bottom: -8px;
+    margin-left: 0px;
+    margin-right: calc(-1 * var(--arrow-size));
+    clip-path: inset(0px round 6px) margin-box;
 }
 
 /* 
  * Define a custom position-try fallback that flips both the position 
  * AND the border-shape arrow so it points UP instead of DOWN
  */
-@position-try --flip-bottom {
-    position-area: bottom center;
-    border-shape: polygon(0% 10px,
-            calc(50% - 10px) 10px,
-            50% 0%,
-            calc(50% + 10px) 10px,
-            100% 10px,
-            100% 100%,
-            0% 100%);
-    padding-bottom: 12px;
-    padding-top: calc(12px + 10px);
-    translate: 0 -8px;
-}
+
 
 [data-tooltip]:hover::before,
 [data-tooltip]:focus::before {
     opacity: 1;
     visibility: visible;
-    translate: 0 0;
+    margin-top: calc(-1 * var(--arrow-size));
+    margin-bottom: 0px;
 }
