@@ -47,6 +47,7 @@ body {
      */
     border: solid var(--arrow-size);
     border-color: #0000 #2b2b2b;
+    /* border-radius: 6px; */
 
     /* Tooltip aesthetics */
     background: #2b2b2b;
@@ -78,7 +79,7 @@ body {
     margin-bottom: -8px;
     margin-left: 0px;
     margin-right: calc(-1 * var(--arrow-size));
-    clip-path: inset(0px) margin-box;
+    clip-path: inset(0px round 6px) margin-box;
 }
 
 /* 
