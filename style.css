@@ -18,11 +18,12 @@ body {
 }
 
 [data-tooltip] {
+    --arrow-size: 11.3px;
     position: relative;
     cursor: pointer;
+    padding: var(--arrow-size);
     anchor-name: --tooltip;
     anchor-scope: --tooltip;
-    --arrow-size: 11.3px;
 }
 
 [data-tooltip]::before {
